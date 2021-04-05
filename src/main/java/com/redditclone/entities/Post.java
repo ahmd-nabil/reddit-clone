@@ -17,7 +17,7 @@ import javax.validation.constraints.NotBlank;
 public class Post {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank(message = "Title can't be empty")
