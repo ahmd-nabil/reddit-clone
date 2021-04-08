@@ -66,4 +66,18 @@ public class AuthService {
                                                     .build();
         return verificationToken;
     }
+
+    @Transactional
+    public boolean verify(String token) {
+        VerificationToken verificationToken = verificationTokenRepository.findByToken(token).orElseThrow(()->new IllegalStateException("Token not found"));
+        if(verificationToken.getExpiryDate().isBefore(Instant.now()))
+            throw new IllegalStateException("Token has expired");
+
+        User user = verificationToken.getUser();
+        if(user.isEnabled())
+            throw new IllegalStateException("User already verified");
+
+        user.setEnabled(true);
+        return user.isEnabled();
+    }
 }

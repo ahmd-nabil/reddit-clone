@@ -1,12 +1,10 @@
 package com.redditclone.controllers;
 
 import com.redditclone.dto.SignupRequest;
+import com.redditclone.services.AuthService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import services.AuthService;
+import org.springframework.web.bind.annotation.*;
 
 @AllArgsConstructor
 @Controller
@@ -18,5 +16,10 @@ public class AuthController {
     @PostMapping("/signup")
     public void signup(@RequestBody SignupRequest signupRequest) {
         authService.signup(signupRequest);
+    }
+
+    @GetMapping("")
+    public void verify(@RequestParam String token) {
+        authService.verify(token);
     }
 }
