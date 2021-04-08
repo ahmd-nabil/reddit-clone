@@ -2,6 +2,7 @@ package com.redditclone.controllers;
 
 import com.redditclone.dto.SignupRequest;
 import com.redditclone.services.AuthService;
+import com.redditclone.services.VerificationTokenService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final AuthService authService;
-
+    private final VerificationTokenService verificationTokenService;
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@RequestBody SignupRequest signupRequest) {
         authService.signup(signupRequest);
@@ -23,7 +24,7 @@ public class AuthController {
 
     @GetMapping("")
     public ResponseEntity<String> verify(@RequestParam String token) {
-        authService.verify(token);
+        verificationTokenService.verify(token);
         return new ResponseEntity<String>("Account Verified", HttpStatus.OK);
     }
 }
