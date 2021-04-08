@@ -2,6 +2,7 @@ package com.redditclone.services;
 
 import com.redditclone.dto.SignupRequest;
 import com.redditclone.entities.User;
+import com.redditclone.entities.UserRole;
 import com.redditclone.entities.VerificationToken;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -32,6 +33,7 @@ public class AuthService {
         user.setEmail(signupRequest.getEmail());
         user.setCreatedTime(Instant.now());
         user.setEnabled(false);
+        user.setUserRole(UserRole.USER);
 
         // save user token in DB (order matters)
         userService.save(user);
