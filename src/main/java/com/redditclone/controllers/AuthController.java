@@ -23,7 +23,7 @@ public class AuthController {
     }
 
     @GetMapping("")
-    public ResponseEntity<String> verify(@RequestParam String token) {
+    public ResponseEntity<String> verifyEmail(@RequestParam String token) {
         verificationTokenService.verify(token);
         return new ResponseEntity<String>("Account Verified", HttpStatus.OK);
     }
