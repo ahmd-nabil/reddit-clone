@@ -17,11 +17,13 @@ import java.util.UUID;
 @Service
 @AllArgsConstructor
 public class AuthService {
-
+    private final String BASE_VERIFICATION_LINK = "http://localhost:8080/api/auth?token=";
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final EmailValidator emailValidator;
     private final VerificationTokenRepository verificationTokenRepository;
+    private final MailBuilder mailBuilder;
+    private final MailService mailService;
 
     @Transactional
     public void signup(SignupRequest signupRequest) {
@@ -39,6 +41,10 @@ public class AuthService {
         // save user token in DB (order matters)
         userRepository.save(user);
         verificationTokenRepository.save(verificationToken);
+
+        // send verification mail to user's email
+        String verificationLink = BASE_VERIFICATION_LINK + verificationToken.getToken();
+        mailService.sendMail(user.getEmail(), mailBuilder.build(user.getUsername(), verificationLink));
     }
 
     private void validateSignupRequest(SignupRequest signupRequest) {
