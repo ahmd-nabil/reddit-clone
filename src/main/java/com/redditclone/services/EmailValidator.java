@@ -1,4 +1,4 @@
-package services;
+package com.redditclone.services;
 
 import org.springframework.stereotype.Service;
 

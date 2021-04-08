@@ -1,4 +1,4 @@
-package services;
+package com.redditclone.services;
 
 import lombok.AllArgsConstructor;
 import org.springframework.mail.javamail.JavaMailSender;

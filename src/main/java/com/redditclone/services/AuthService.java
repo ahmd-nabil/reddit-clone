@@ -1,4 +1,4 @@
-package services;
+package com.redditclone.services;
 
 import com.redditclone.dto.SignupRequest;
 import com.redditclone.entities.User;
