@@ -16,7 +16,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return userRepository.findByEmail(email).orElseThrow(()->new IllegalStateException("incorrect username or password"));
+        return userRepository.findByEmail(email).orElseThrow(()->new IllegalStateException("incorrect email or password"));
     }
 
     public User save(User user) {
