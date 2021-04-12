@@ -1,5 +1,6 @@
 package com.redditclone.security;
 
+import com.redditclone.jwt.JwtAuthFilter;
 import com.redditclone.jwt.JwtConfig;
 import com.redditclone.jwt.JwtUsernamePasswordAuthenticationFilter;
 import com.redditclone.services.UserService;
@@ -14,7 +15,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @AllArgsConstructor
 @EnableWebSecurity
@@ -31,7 +31,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .addFilterBefore(new JwtUsernamePasswordAuthenticationFilter(authenticationManager(), jwtConfig, "/api/auth/login"), UsernamePasswordAuthenticationFilter.class)
+                .addFilter(new JwtUsernamePasswordAuthenticationFilter(authenticationManager(), jwtConfig, "/api/auth/login"))
+                .addFilterAfter(new JwtAuthFilter(jwtConfig), JwtUsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers("/api/auth/**")
                     .permitAll()
