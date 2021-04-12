@@ -1,7 +1,7 @@
 package com.redditclone.security;
 
 import com.redditclone.jwt.JwtConfig;
-import com.redditclone.jwt.JwtEmailAndPasswordAuthFilter;
+import com.redditclone.jwt.JwtUsernamePasswordAuthenticationFilter;
 import com.redditclone.services.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -31,7 +31,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .addFilterBefore(new JwtEmailAndPasswordAuthFilter("/api/auth/login",authenticationManager(), jwtConfig), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtUsernamePasswordAuthenticationFilter(authenticationManager(), jwtConfig, "/api/auth/login"), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers("/api/auth/**")
                     .permitAll()

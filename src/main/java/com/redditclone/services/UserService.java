@@ -15,8 +15,8 @@ public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return userRepository.findByEmail(email).orElseThrow(()->new IllegalStateException("incorrect email or password"));
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByUsername(username).orElseThrow(()->new IllegalStateException("incorrect username or password"));
     }
 
     public User save(User user) {
@@ -33,5 +33,9 @@ public class UserService implements UserDetailsService {
 
     public User findByEmail(String email) {
         return userRepository.findByEmail(email).orElse(null);
+    }
+
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username).orElse(null);
     }
 }

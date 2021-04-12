@@ -6,7 +6,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -14,13 +14,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class JwtEmailAndPasswordAuthFilter extends AbstractAuthenticationProcessingFilter {
+public class JwtUsernamePasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final JwtConfig jwtConfig;
 
-    public JwtEmailAndPasswordAuthFilter(String loginUrl, AuthenticationManager authenticationManager, JwtConfig jwtConfig) {
-        super(loginUrl, authenticationManager);
+    public JwtUsernamePasswordAuthenticationFilter(AuthenticationManager authenticationManager, JwtConfig jwtConfig, String url) {
+        super.setAuthenticationManager(authenticationManager);
         this.jwtConfig = jwtConfig;
+        setFilterProcessesUrl(url);
     }
 
     @Override
@@ -28,7 +29,7 @@ public class JwtEmailAndPasswordAuthFilter extends AbstractAuthenticationProcess
         try {
             LoginRequest loginRequest = new ObjectMapper()
                     .readValue(request.getInputStream(), LoginRequest.class);
-            Authentication usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword());
+            Authentication usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword());
             Authentication authenticationResult = super.getAuthenticationManager().authenticate(usernamePasswordAuthenticationToken);
             return authenticationResult;
         } catch (IOException e) {
