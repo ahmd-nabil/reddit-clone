@@ -5,7 +5,6 @@ import com.redditclone.entities.User;
 import com.redditclone.entities.UserRole;
 import com.redditclone.entities.VerificationToken;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,11 +47,6 @@ public class AuthService {
     private void validateSignupRequest(SignupRequest signupRequest) {
         // make sure email is valid
         if(!emailValidator.valid(signupRequest.getEmail()))
-            throw new IllegalStateException("Not valid email.");
-
-        // make sure there is no old user with the same email
-        UserDetails oldUser = userService.findByEmail(signupRequest.getEmail());
-        if(oldUser != null)
-            throw new IllegalStateException("There is already an account with this email");
+            throw new IllegalStateException("Not Valid email.");
     }
 }
