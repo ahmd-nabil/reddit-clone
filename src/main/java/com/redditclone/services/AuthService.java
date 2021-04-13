@@ -5,6 +5,8 @@ import com.redditclone.entities.User;
 import com.redditclone.entities.UserRole;
 import com.redditclone.entities.VerificationToken;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,5 +50,9 @@ public class AuthService {
         // make sure email is valid
         if(!emailValidator.valid(signupRequest.getEmail()))
             throw new IllegalStateException("Not Valid email.");
+    }
+
+    public Authentication getCurrentUserAuthentication() {
+        return SecurityContextHolder.getContext().getAuthentication();
     }
 }
