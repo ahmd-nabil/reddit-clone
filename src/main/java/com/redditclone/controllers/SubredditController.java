@@ -17,7 +17,7 @@ public class SubredditController {
     private final SubredditService subredditService;
 
     @GetMapping
-    public List<Subreddit> getSubreddits() {
+    public List<Subreddit> getAllSubreddits() {
         return subredditService.findAll();
     }
 
@@ -36,5 +36,10 @@ public class SubredditController {
     public ResponseEntity deleteSubreddit(@PathVariable Long id) {
         subredditService.deleteById(id);
         return new ResponseEntity(HttpStatus.CREATED);
+    }
+
+    @GetMapping("{name}")
+    public Subreddit getSubredditByName(@PathVariable String name) {
+        return subredditService.findByName(name);
     }
 }

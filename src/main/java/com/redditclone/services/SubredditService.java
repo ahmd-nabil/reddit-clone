@@ -32,4 +32,8 @@ public class SubredditService {
     public void deleteById(Long id) {
         subredditRepository.deleteById(id);
     }
+
+    public Subreddit findByName(String name) {
+        return subredditRepository.findByName(name).orElseThrow(()->new RedditException("No Such subreddit"));
+    }
 }
