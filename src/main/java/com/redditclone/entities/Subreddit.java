@@ -27,7 +27,7 @@ public class Subreddit {
     @NotBlank(message = "Description can't be empty")
     private String description;
 
-    @OneToMany(mappedBy = "subreddit")
+    @OneToMany(mappedBy = "subreddit", cascade = CascadeType.ALL)
     private List<Post> posts;
 
     private Instant createdTime;
