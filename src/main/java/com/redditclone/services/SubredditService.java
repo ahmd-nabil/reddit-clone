@@ -10,9 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.Instant;
 import java.util.List;
 
-@Service
 @AllArgsConstructor
+@Transactional
+@Service
 public class SubredditService {
+
     private final SubredditRepository subredditRepository;
 
     public List<Subreddit> findAll() {
@@ -28,7 +30,6 @@ public class SubredditService {
         return subredditRepository.save(subreddit);
     }
 
-    @Transactional
     public void deleteById(Long id) {
         subredditRepository.deleteById(id);
     }

@@ -1,5 +1,8 @@
 package com.redditclone.controllers;
 
+import com.redditclone.converters.SubredditDtoToSubreddit;
+import com.redditclone.converters.SubredditToSubredditDto;
+import com.redditclone.dto.SubredditDto;
 import com.redditclone.entities.Subreddit;
 import com.redditclone.services.SubredditService;
 import lombok.AllArgsConstructor;
@@ -8,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @RestController
@@ -15,19 +19,23 @@ import java.util.List;
 public class SubredditController {
 
     private final SubredditService subredditService;
+    private final SubredditToSubredditDto subredditToSubredditDto;
+    private final SubredditDtoToSubreddit subredditDtoToSubreddit;
 
     @GetMapping
-    public List<Subreddit> getAllSubreddits() {
-        return subredditService.findAll();
+    public List<SubredditDto> getAllSubreddits() {
+        return subredditService.findAll().stream().map(subreddit -> subredditToSubredditDto.convert(subreddit)).collect(Collectors.toList());
     }
 
     @GetMapping("{id}")
-    public Subreddit getSubredditById(@PathVariable Long id) {
-        return subredditService.findById(id);
+    public SubredditDto getSubredditById(@PathVariable Long id) {
+        Subreddit subreddit = subredditService.findById(id);
+        return subredditToSubredditDto.convert(subreddit);
     }
 
     @PostMapping
-    public ResponseEntity saveSubreddit(@RequestBody Subreddit subreddit) {
+    public ResponseEntity saveSubreddit(@RequestBody SubredditDto subredditDto) {
+        Subreddit subreddit = subredditDtoToSubreddit.convert(subredditDto);
         subredditService.save(subreddit);
         return new ResponseEntity(HttpStatus.CREATED);
     }
@@ -35,7 +43,7 @@ public class SubredditController {
     @DeleteMapping("{id}")
     public ResponseEntity deleteSubreddit(@PathVariable Long id) {
         subredditService.deleteById(id);
-        return new ResponseEntity(HttpStatus.CREATED);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @GetMapping("{name}")
