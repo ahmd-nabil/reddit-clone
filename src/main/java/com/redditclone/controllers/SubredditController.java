@@ -24,7 +24,7 @@ public class SubredditController {
 
     @GetMapping
     public List<SubredditDto> getAllSubreddits() {
-        return subredditService.findAll().stream().map(subreddit -> subredditToSubredditDto.convert(subreddit)).collect(Collectors.toList());
+        return subredditService.findAll().stream().map(subredditToSubredditDto::convert).collect(Collectors.toList());
     }
 
     @GetMapping("{id}")

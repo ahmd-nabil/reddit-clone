@@ -24,7 +24,7 @@ public class CommentController {
 
     @GetMapping
     public List<CommentDto> getAllComments() {
-        return commentService.findAll().stream().map(comment -> commentToCommentDto.convert(comment)).collect(Collectors.toList());
+        return commentService.findAll().stream().map(commentToCommentDto::convert).collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
@@ -46,11 +46,11 @@ public class CommentController {
 
     @GetMapping("/user/{username}")
     public List<CommentDto> getAllCommentsByUser(@PathVariable String username) {
-        return commentService.findAllByUser(username).stream().map(comment -> commentToCommentDto.convert(comment)).collect(Collectors.toList());
+        return commentService.findAllByUser(username).stream().map(commentToCommentDto::convert).collect(Collectors.toList());
     }
 
     @GetMapping("/post/{postId}")
     public List<CommentDto> getAllCommentsByPost(@PathVariable Long postId) {
-        return commentService.findAllByPost(postId).stream().map(comment -> commentToCommentDto.convert(comment)).collect(Collectors.toList());
+        return commentService.findAllByPost(postId).stream().map(commentToCommentDto::convert).collect(Collectors.toList());
     }
 }

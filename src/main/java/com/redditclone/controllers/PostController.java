@@ -47,11 +47,11 @@ public class PostController {
 
     @GetMapping("/user/{username}")
     public List<PostResponse> getAllByUser(@PathVariable String username) {
-        return postService.findAllByUsername(username).stream().map(post -> postToPostResponse.convert(post)).collect(Collectors.toList());
+        return postService.findAllByUsername(username).stream().map(postToPostResponse::convert).collect(Collectors.toList());
     }
 
     @GetMapping("/subreddit/{subredditId}")
     public List<PostResponse> getAllBySubreddit(@PathVariable Long subredditId) {
-        return postService.findAllBySubredditId(subredditId).stream().map(post -> postToPostResponse.convert(post)).collect(Collectors.toList());
+        return postService.findAllBySubredditId(subredditId).stream().map(postToPostResponse::convert).collect(Collectors.toList());
     }
 }
