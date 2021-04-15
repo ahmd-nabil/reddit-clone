@@ -54,7 +54,6 @@ public class CommentService {
         return commentRepository.findAllByUser(user);
     }
 
-
     public List<Comment> findAllByUser(User user) {
         return commentRepository.findAllByUser(user);
     }
@@ -63,7 +62,6 @@ public class CommentService {
         Post post = postService.findById(postId);
         return commentRepository.findAllByPost(post);
     }
-
 
     public List<Comment> findAllByPost(Post post) {
         return commentRepository.findAllByPost(post);
