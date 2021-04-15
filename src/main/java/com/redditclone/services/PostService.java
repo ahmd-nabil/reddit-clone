@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Transactional
@@ -28,14 +27,12 @@ public class PostService {
     private final PostRequestToPost postRequestToPost;
     private final PostToPostResponse postToPostResponse;
 
-    public List<PostResponse> findAll() {
-        return postRepository.findAll().stream().map(post -> postToPostResponse.convert(post)).collect(Collectors.toList());
+    public List<Post> findAll() {
+        return postRepository.findAll();
     }
 
-    public PostResponse findById(Long id) {
-        Post post = postRepository.findById(id).orElseThrow(()->new RedditException("Post Not Found!"));
-        PostResponse postResponse = postToPostResponse.convert(post);
-        return postResponse;
+    public Post findById(Long id) {
+        return postRepository.findById(id).orElseThrow(()->new RedditException("Post not found!"));
     }
 
     public PostResponse save(PostRequest postRequest) {
@@ -47,27 +44,24 @@ public class PostService {
 
     public void deleteById(Long id) {
         User currentUser = userService.findByUsername(authService.getCurrentUserAuthentication().getName());
-        PostResponse postResponse = findById(id);
-        if(currentUser.getId() != postResponse.getUserId())
+        Post post = findById(id);
+        if(currentUser.getId() != post.getUser().getId())
             throw new RedditException("Something went wrong. can't delete others posts");
         postRepository.deleteById(id);
     }
 
-    public List<PostResponse> findAllByUsername(String username) {
+    public List<Post> findAllByUsername(String username) {
         User user = userService.findByUsername(username);
-        List<PostResponse> postResponses = postRepository.findAllByUser(user).stream().map(post -> postToPostResponse.convert(post)).collect(Collectors.toList());
-        return postResponses;
+        return postRepository.findAllByUser(user);
     }
 
-    public List<PostResponse> findAllBySubredditName(String name) {
+    public List<Post> findAllBySubredditName(String name) {
         Subreddit subreddit = subredditService.findByName(name);
-        List<PostResponse> postResponses =  postRepository.findAllBySubreddit(subreddit).stream().map(post -> postToPostResponse.convert(post)).collect(Collectors.toList());
-        return postResponses;
+        return postRepository.findAllBySubreddit(subreddit);
     }
 
-    public List<PostResponse> findAllBySubredditId(Long subredditId) {
+    public List<Post> findAllBySubredditId(Long subredditId) {
         Subreddit subreddit = subredditService.findById(subredditId);
-        List<PostResponse> postResponses =  postRepository.findAllBySubreddit(subreddit).stream().map(post -> postToPostResponse.convert(post)).collect(Collectors.toList());
-        return postResponses;
+        return postRepository.findAllBySubreddit(subreddit);
     }
 }
