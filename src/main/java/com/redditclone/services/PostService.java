@@ -39,6 +39,10 @@ public class PostService {
         return postRepository.save(post);
     }
 
+    public Post save(Post post) {
+        return postRepository.save(post);
+    }
+
     public void deleteById(Long id) {
         User currentUser = userService.findByUsername(authService.getCurrentUserAuthentication().getName());
         Post post = findById(id);
