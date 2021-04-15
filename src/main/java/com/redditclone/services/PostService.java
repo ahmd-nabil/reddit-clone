@@ -3,7 +3,6 @@ package com.redditclone.services;
 import com.redditclone.converters.PostRequestToPost;
 import com.redditclone.converters.PostToPostResponse;
 import com.redditclone.dto.PostRequest;
-import com.redditclone.dto.PostResponse;
 import com.redditclone.entities.Post;
 import com.redditclone.entities.Subreddit;
 import com.redditclone.entities.User;
@@ -35,11 +34,9 @@ public class PostService {
         return postRepository.findById(id).orElseThrow(()->new RedditException("Post not found!"));
     }
 
-    public PostResponse save(PostRequest postRequest) {
+    public Post save(PostRequest postRequest) {
         Post post = postRequestToPost.convert(postRequest);
-        post = postRepository.save(post);
-        PostResponse postResponse = postToPostResponse.convert(post);
-        return postResponse;
+        return postRepository.save(post);
     }
 
     public void deleteById(Long id) {
