@@ -1,6 +1,7 @@
 package com.redditclone.services;
 
 import com.redditclone.entities.User;
+import com.redditclone.exceptions.RedditException;
 import com.redditclone.repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,6 +20,18 @@ public class UserService implements UserDetailsService {
         return userRepository.findByUsername(username).orElseThrow(()->new IllegalStateException("incorrect username or password"));
     }
 
+    public User findByUsername(String username) {
+        return userRepository.findByUsername(username).orElse(null);
+    }
+
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email).orElse(null);
+    }
+
+    public User findById(Long id) {
+        return userRepository.findById(id).orElseThrow(()->new RedditException("User not found!"));
+    }
+
     public User save(User user) {
         User oldUser = userRepository.findByUsername(user.getUsername()).orElse(null);
         if(oldUser != null) {
@@ -31,11 +44,7 @@ public class UserService implements UserDetailsService {
         return userRepository.save(user);
     }
 
-    public User findByEmail(String email) {
-        return userRepository.findByEmail(email).orElse(null);
-    }
-
-    public User findByUsername(String username) {
-        return userRepository.findByUsername(username).orElse(null);
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
     }
 }
