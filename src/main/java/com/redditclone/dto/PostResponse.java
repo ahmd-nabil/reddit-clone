@@ -14,7 +14,8 @@ public class PostResponse {
     private String title;
     private String url;
     private String description;
-    private Integer voteCount;
+    private Integer votesCount;
     private Long userId;
     private Long subredditId;
+    private Integer commentsCount;
 }

@@ -17,9 +17,10 @@ public class PostToPostResponse implements Converter<Post, PostResponse> {
                 .title(post.getTitle())
                 .url(post.getUrl())
                 .description(post.getDescription())
-                .voteCount(post.getVoteCount())
+                .votesCount(post.getVoteCount())
                 .userId(post.getUser().getId())
                 .subredditId(post.getSubreddit().getId())
+                .commentsCount(post.getComments().size())
                 .build();
         return postResponse;
     }
