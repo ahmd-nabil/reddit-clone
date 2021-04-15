@@ -26,7 +26,7 @@ public class VoteDtoToVote implements Converter<VoteDto, Vote> {
         User user = userservice.findByUsername(authService.getCurrentUserAuthentication().getName());
         Vote vote = Vote.builder()
                 .id(voteDto.getId())
-                .type(voteDto.getDirection() >= 1? VoteType.UPVOTE: VoteType.DOWNVOTE)
+                .type(voteDto.getDirection() == 1 ? VoteType.UPVOTE: VoteType.DOWNVOTE)
                 .post(post)
                 .user(user)
                 .build();
