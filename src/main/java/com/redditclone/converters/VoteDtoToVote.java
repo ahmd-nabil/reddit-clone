@@ -9,13 +9,11 @@ import com.redditclone.services.AuthService;
 import com.redditclone.services.PostService;
 import com.redditclone.services.UserService;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.stereotype.Component;
 
+@Component
 @AllArgsConstructor
-@Data
-@Builder
 public class VoteDtoToVote implements Converter<VoteDto, Vote> {
 
     private final PostService postService;
