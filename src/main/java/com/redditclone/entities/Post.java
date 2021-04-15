@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -39,4 +40,7 @@ public class Post {
     @ManyToOne
     @JoinColumn(name = "subreddit_id", referencedColumnName = "id")
     private Subreddit subreddit;
+
+    @OneToMany(mappedBy = "post")
+    private List<Comment> comments;
 }
