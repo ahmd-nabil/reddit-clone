@@ -11,8 +11,9 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.UUID;
 
-@AllArgsConstructor
 @Service
+@AllArgsConstructor
+@Transactional
 public class VerificationTokenService {
     private final VerificationTokenRepository verificationTokenRepository;
 
@@ -26,7 +27,6 @@ public class VerificationTokenService {
         return verificationToken;
     }
 
-    @Transactional
     public boolean verify(String token) {
         VerificationToken verificationToken = verificationTokenRepository.findByToken(token).orElseThrow(()->new IllegalStateException("Token not found"));
         if(verificationToken.getExpiryDate().isBefore(Instant.now()))
