@@ -25,8 +25,8 @@ public class VoteController {
     }
 
     @PostMapping("/{postId}")
-    public ResponseEntity addVote(@PathVariable Long postId, @RequestBody VoteDto voteDto) {
+    public ResponseEntity<Void> addVote(@PathVariable Long postId, @RequestBody VoteDto voteDto) {
         voteService.save(postId, voteDto);
-        return new ResponseEntity(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

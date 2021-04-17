@@ -34,16 +34,16 @@ public class SubredditController {
     }
 
     @PostMapping
-    public ResponseEntity saveSubreddit(@RequestBody SubredditDto subredditDto) {
+    public ResponseEntity<Void> saveSubreddit(@RequestBody SubredditDto subredditDto) {
         Subreddit subreddit = subredditDtoToSubreddit.convert(subredditDto);
         subredditService.save(subreddit);
-        return new ResponseEntity(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity deleteSubreddit(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteSubreddit(@PathVariable Long id) {
         subredditService.deleteById(id);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("{name}")

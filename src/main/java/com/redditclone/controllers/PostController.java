@@ -34,15 +34,15 @@ public class PostController {
     }
 
     @PostMapping
-    public ResponseEntity savePost(@RequestBody PostRequest postRequest) {
+    public ResponseEntity<Void> savePost(@RequestBody PostRequest postRequest) {
         postService.save(postRequest);
-        return new ResponseEntity(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity deletePost(@PathVariable Long id) {
+    public ResponseEntity<Void> deletePost(@PathVariable Long id) {
         postService.deleteById(id);
-        return new ResponseEntity(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("/user/{username}")

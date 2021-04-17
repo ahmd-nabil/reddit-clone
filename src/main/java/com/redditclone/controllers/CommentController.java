@@ -33,15 +33,15 @@ public class CommentController {
     }
 
     @PostMapping
-    public ResponseEntity saveComment(@RequestBody CommentDto commentDto) {
+    public ResponseEntity<Void> saveComment(@RequestBody CommentDto commentDto) {
         commentService.save(commentDto);
-        return new ResponseEntity(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteComment(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteComment(@PathVariable Long id) {
         commentService.deleteById(id);
-        return new ResponseEntity(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("/user/{username}")
