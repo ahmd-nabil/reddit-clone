@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.Instant;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -18,4 +20,6 @@ public class PostResponse {
     private Long userId;
     private Long subredditId;
     private Integer commentsCount;
+    private Instant createdTime;
+    private String timeAgo;
 }
