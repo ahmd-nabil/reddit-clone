@@ -16,7 +16,7 @@ import java.time.Instant;
 @Service
 @AllArgsConstructor
 public class AuthService {
-    private final String BASE_VERIFICATION_LINK = "http://localhost:8080/api/auth?token=";
+    private final String BASE_VERIFICATION_LINK = "http://localhost:8080/api/auth/verify?token=";
     private final PasswordEncoder passwordEncoder;
     private final UserService userService;
     private final EmailValidator emailValidator;

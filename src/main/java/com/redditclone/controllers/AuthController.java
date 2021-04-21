@@ -1,6 +1,5 @@
 package com.redditclone.controllers;
 
-import com.redditclone.dto.LoginRequest;
 import com.redditclone.dto.SignupRequest;
 import com.redditclone.services.AuthService;
 import com.redditclone.services.VerificationTokenService;
@@ -24,7 +23,7 @@ public class AuthController {
         return new ResponseEntity<String>("Signed Up Successfully", HttpStatus.OK);
     }
 
-    @GetMapping("")
+    @GetMapping("/verify")
     public ResponseEntity<String> verifyEmail(@RequestParam String token) {
         verificationTokenService.verify(token);
         return new ResponseEntity<String>("Account Verified", HttpStatus.OK);
