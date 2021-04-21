@@ -1,10 +1,15 @@
 package com.redditclone.services;
 
+import com.redditclone.dto.Jwt;
+import com.redditclone.dto.LoginRequest;
 import com.redditclone.dto.SignupRequest;
 import com.redditclone.entities.User;
 import com.redditclone.entities.UserRole;
 import com.redditclone.entities.VerificationToken;
+import com.redditclone.jwt.JwtConfig;
 import lombok.AllArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,6 +28,8 @@ public class AuthService {
     private final VerificationTokenService verificationTokenService;
     private final MailBuilder mailBuilder;
     private final MailService mailService;
+    private final AuthenticationManager authenticationManager;
+    private final JwtConfig jwtConfig;
 
     @Transactional
     public void signup(SignupRequest signupRequest) {
@@ -54,5 +61,14 @@ public class AuthService {
 
     public Authentication getCurrentUserAuthentication() {
         return SecurityContextHolder.getContext().getAuthentication();
+    }
+
+    public Jwt login(LoginRequest loginRequest) {
+        Authentication authResult = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+        if(authResult.isAuthenticated()) {
+            String token = jwtConfig.getTokenPrefix() + jwtConfig.generateToken(authResult);
+            return new Jwt(token);
+        }
+        return new Jwt(null);
     }
 }

@@ -1,16 +1,17 @@
 package com.redditclone.controllers;
 
+import com.redditclone.dto.Jwt;
+import com.redditclone.dto.LoginRequest;
 import com.redditclone.dto.SignupRequest;
 import com.redditclone.services.AuthService;
 import com.redditclone.services.VerificationTokenService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @AllArgsConstructor
-@Controller
+@RestController
 @RequestMapping("/api/auth")
 public class AuthController {
 
@@ -30,8 +31,12 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
-        authService.login(loginRequest);
-        return new ResponseEntity<>("Logged in", HttpStatus.OK);
+    public Jwt login(@RequestBody LoginRequest loginRequest) {
+        return authService.login(loginRequest);
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout() {
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
