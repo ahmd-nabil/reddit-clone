@@ -6,7 +6,6 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -25,7 +24,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
-@Slf4j
 public class JwtAuthFilter extends OncePerRequestFilter {
 
     private final JwtConfig jwtConfig;
@@ -38,7 +36,6 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             return;
         }
         jwtToken = jwtToken.replace(jwtConfig.getTokenPrefix(), "");
-        logger.debug(jwtToken);
         Jws<Claims> claimsJws = Jwts.parserBuilder()
                 .setSigningKey(Keys.hmacShaKeyFor(jwtConfig.getSecretKey().getBytes(StandardCharsets.UTF_8)))
                 .build()
