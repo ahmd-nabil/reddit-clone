@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.time.Instant;
 import java.util.List;
 
 @Data
@@ -41,6 +42,8 @@ public class Post {
     @JoinColumn(name = "subreddit_id", referencedColumnName = "id")
     private Subreddit subreddit;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Comment> comments;
+
+    private Instant createdTime;
 }
