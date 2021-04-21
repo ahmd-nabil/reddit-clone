@@ -97,6 +97,13 @@
             <artifactId>prettytime</artifactId>
             <version>5.0.0.Final</version>
         </dependency>
+
+        <!-- Swagger -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-boot-starter</artifactId>
+            <version>3.0.0</version>
+        </dependency>
     </dependencies>
 
     <build>

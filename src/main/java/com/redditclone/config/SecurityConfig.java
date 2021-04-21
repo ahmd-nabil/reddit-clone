@@ -1,4 +1,4 @@
-package com.redditclone.security;
+package com.redditclone.config;
 
 import com.redditclone.jwt.JwtAuthFilter;
 import com.redditclone.jwt.JwtConfig;
@@ -35,6 +35,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterAfter(new JwtAuthFilter(jwtConfig), JwtUsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers("/api/auth/**")
+                    .permitAll()
+                .antMatchers("/swagger-ui/**")
                     .permitAll()
                 .anyRequest()
                     .authenticated();
