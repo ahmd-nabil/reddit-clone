@@ -37,7 +37,7 @@ public class UserService implements UserDetailsService {
     public User save(User user) {
         User oldUser = userRepository.findByUsername(user.getUsername()).orElse(null);
         if(oldUser != null) {
-            throw new IllegalStateException("There Username already exists");
+            throw new IllegalStateException("Username already exists");
         }
         oldUser = userRepository.findByEmail(user.getEmail()).orElse(null);
         if(oldUser != null) {
