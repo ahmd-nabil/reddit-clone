@@ -37,11 +37,11 @@ public class UserService implements UserDetailsService {
     public User save(User user) {
         User oldUser = userRepository.findByUsername(user.getUsername()).orElse(null);
         if(oldUser != null) {
-            throw new IllegalStateException("Username already exists");
+            throw new RedditException("Username already exists");
         }
         oldUser = userRepository.findByEmail(user.getEmail()).orElse(null);
         if(oldUser != null) {
-            throw new IllegalStateException("There is already an account with this email");
+            throw new RedditException("There is an account connected with this email");
         }
         return userRepository.save(user);
     }
