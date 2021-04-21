@@ -11,6 +11,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
+import java.time.Instant;
+
 @AllArgsConstructor
 @Component
 public class PostRequestToPost implements Converter<PostRequest, Post> {
@@ -31,6 +33,7 @@ public class PostRequestToPost implements Converter<PostRequest, Post> {
                         .voteCount(0)
                         .user(user)
                         .subreddit(subreddit)
+                        .createdTime(Instant.now())
                         .build();
         return post;
     }
