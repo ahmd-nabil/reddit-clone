@@ -13,12 +13,12 @@ import java.time.Instant;
 @Builder
 public class PostResponse {
     private Long id;
+    private String username;
+    private String subredditName;
     private String title;
-    private String url;
     private String description;
+    private String url;
     private Integer votesCount;
-    private Long userId;
-    private Long subredditId;
     private Integer commentsCount;
     private Instant createdTime;
     private String timeAgo;
