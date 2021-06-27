@@ -67,8 +67,8 @@ public class AuthService {
         Authentication authResult = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
         if(authResult.isAuthenticated()) {
             String token = jwtConfig.getTokenPrefix() + jwtConfig.generateToken(authResult);
-            return new Jwt(token);
+            return new Jwt(loginRequest.getUsername(), token);
         }
-        return new Jwt(null);
+        return new Jwt(null,null);
     }
 }
