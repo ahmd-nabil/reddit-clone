@@ -54,7 +54,7 @@ Main Page (authenticated user):
 
 <img src="./screenshots/main_page_authenticated.png" width="800" height="440">
 
-Registration Page:
+Create Post:
 
 <img src="./screenshots/create_post.png" width="800" height="440">
 
